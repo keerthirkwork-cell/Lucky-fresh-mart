@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucky Fresh Mart – Fresh Vegetables Daily | HMT Layout, Bengaluru</title>
+  <meta name="description" content="Lucky Fresh Mart delivers the freshest farm vegetables in HMT Layout, Bengaluru. Order daily fresh vegetables online via WhatsApp. Best prices guaranteed!" />
+  <meta name="keywords" content="fresh vegetables HMT Layout, vegetable shop Bengaluru, online vegetable order, Lucky Fresh Mart" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Lucky Fresh Mart – Fresh Vegetables Daily" />
+  <meta property="og:description" content="Freshest farm-to-table vegetables in HMT Layout, Bengaluru. Order via WhatsApp!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og-banner.jpg" />
+  <link rel="canonical" href="https://luckyfreshmart.in" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "GroceryStore",
+    "name": "Lucky Fresh Mart",
+    "description": "Fresh vegetables delivered daily in HMT Layout, Bengaluru",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "HMT Layout",
+      "addressLocality": "Bengaluru",
+      "addressRegion": "Karnataka",
+      "postalCode": "560013",
+      "addressCountry": "IN"
+    },
+    "telephone": "+91-XXXXXXXXXX",
+    "openingHours": "Mo-Su 06:00-21:00",
+    "priceRange": "₹"
+  }
+  </script>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ===== STICKY HEADER ===== -->
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <span class="logo-icon">🥦</span>
+      <div>
+        <div class="logo-name">Lucky Fresh Mart</div>
+        <div class="logo-tagline">Farm to Your Table</div>
+      </div>
+    </div>
+    <nav class="nav-links" id="nav-links">
+      <a href="#home">Home</a>
+      <a href="#offers">Offers</a>
+      <a href="#products">Vegetables</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="whatsapp-nav-btn" onclick="openWhatsApp('Hi! I want to order vegetables from Lucky Fresh Mart.')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Order Now
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-circle c1"></div>
+    <div class="hero-circle c2"></div>
+    <div class="hero-circle c3"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-badge animate-in">📍 HMT Layout, Bengaluru</div>
+    <h1 class="hero-title animate-in delay-1">
+      <span>Farm Fresh.</span><br/>
+      <span class="accent">Daily Delivered.</span>
+    </h1>
+    <p class="hero-sub animate-in delay-2">Handpicked vegetables straight from local farms — crisp, chemical-free, and delivered to your doorstep every morning.</p>
+    <div class="hero-actions animate-in delay-3">
+      <button class="btn-primary" onclick="openWhatsApp('Hi! I want to place a vegetable order from Lucky Fresh Mart, HMT Layout.')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Order on WhatsApp
+      </button>
+      <a href="#products" class="btn-secondary">Browse Vegetables</a>
+    </div>
+    <div class="hero-stats animate-in delay-4">
+      <div class="stat"><span class="stat-num">500+</span><span>Happy Customers</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">50+</span><span>Varieties</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">6 AM</span><span>Daily Fresh Stock</span></div>
+    </div>
+  </div>
+  <div class="hero-emoji-float">
+    <span class="float f1">🥕</span>
+    <span class="float f2">🍅</span>
+    <span class="float f3">🥦</span>
+    <span class="float f4">🧅</span>
+    <span class="float f5">🥬</span>
+    <span class="float f6">🌽</span>
+  </div>
+</section>
+
+<!-- ===== TRUST BAR ===== -->
+<div class="trust-bar">
+  <div class="container trust-inner">
+    <div class="trust-item"><span>✅</span> 100% Fresh Guarantee</div>
+    <div class="trust-item"><span>🚚</span> Home Delivery Available</div>
+    <div class="trust-item"><span>💰</span> Best Market Prices</div>
+    <div class="trust-item"><span>🌱</span> Local Farm Sourced</div>
+    <div class="trust-item"><span>⏰</span> Open 6AM – 9PM Daily</div>
+  </div>
+</div>
+
+<!-- ===== OFFERS SECTION ===== -->
+<section class="offers-section" id="offers">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">🔥 Hot Deals</div>
+      <h2>Today's Special Offers</h2>
+      <p>Fresh deals updated every morning. Grab them before they're gone!</p>
+    </div>
+    <div class="offers-grid" id="offers-grid">
+      <!-- Loaded by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS SECTION ===== -->
+<section class="products-section" id="products">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">🥗 Fresh Stock</div>
+      <h2>Today's Vegetables</h2>
+      <p>Prices updated daily. All vegetables sourced fresh every morning.</p>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="leafy">Leafy Greens</button>
+      <button class="filter-btn" data-cat="root">Root Vegetables</button>
+      <button class="filter-btn" data-cat="fruity">Fruity Veggies</button>
+      <button class="filter-btn" data-cat="exotic">Exotic</button>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      <!-- Loaded by JS -->
+    </div>
+
+    <div class="view-all-wrap">
+      <button class="btn-outline" onclick="openWhatsApp('Hi! I want to see full price list of Lucky Fresh Mart.')">Get Full Price List on WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CART SIDEBAR ===== -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h3>🛒 Your Order</h3>
+    <button onclick="toggleCart()" class="cart-close">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">Your cart is empty.<br/>Add vegetables to start!</div>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-total">Total: <strong id="cart-total-amt">₹0</strong></div>
+    <button class="btn-primary full-width" id="whatsapp-order-btn" onclick="sendWhatsAppOrder()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Send Order via WhatsApp
+    </button>
+    <button class="btn-ghost" onclick="clearCart()">Clear Cart</button>
+  </div>
+</div>
+
+<!-- Floating Cart Button -->
+<button class="cart-fab" id="cart-fab" onclick="toggleCart()" style="display:none">
+  🛒 <span class="cart-count" id="cart-count">0</span>
+</button>
+
+<!-- ===== ABOUT SECTION ===== -->
+<section class="about-section" id="about">
+  <div class="container about-grid">
+    <div class="about-image">
+      <div class="about-img-card">
+        <div class="about-emoji-big">🥦</div>
+        <div class="about-badge-float">Est. 2015</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-tag">🌿 Our Story</div>
+      <h2>Trusted by HMT Layout for Years</h2>
+      <p>Lucky Fresh Mart started with a simple mission: give families access to the freshest vegetables at fair prices. We source directly from local farmers every single morning so you get produce that's truly farm-fresh.</p>
+      <ul class="about-list">
+        <li>🌾 Direct from 15+ local farms</li>
+        <li>🧺 Hand-sorted every morning at 5 AM</li>
+        <li>❌ No pesticide-heavy produce</li>
+        <li>📱 Easy WhatsApp ordering</li>
+        <li>🚚 Delivery to your door (HMT Layout & nearby)</li>
+      </ul>
+      <button class="btn-primary" onclick="openWhatsApp('Hi Lucky Fresh Mart! I want to know more about your services.')">Chat With Us</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">⭐ Reviews</div>
+      <h2>What Our Customers Say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Vegetables are always super fresh! Been ordering for 2 years. The tomatoes are the best in the area."</p>
+        <div class="reviewer">— Priya S., HMT Layout</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Great prices and WhatsApp ordering is so convenient. They deliver quickly and always fresh!"</p>
+        <div class="reviewer">— Rajan M., Mathikere</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Best vegetable shop around. The daily deals are amazing. My family loves the leafy greens."</p>
+        <div class="reviewer">— Sunita K., HMT Layout</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT + MAP ===== -->
+<section class="contact-section" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <div class="section-tag">📍 Find Us</div>
+      <h2>Visit or Contact Us</h2>
+      <div class="contact-cards">
+        <a class="contact-card" href="tel:+91XXXXXXXXXX">
+          <span class="cc-icon">📞</span>
+          <div>
+            <strong>Call Us</strong>
+            <span>+91-XXXXXXXXXX</span>
+          </div>
+        </a>
+        <a class="contact-card" href="https://wa.me/91XXXXXXXXXX" target="_blank">
+          <span class="cc-icon">💬</span>
+          <div>
+            <strong>WhatsApp</strong>
+            <span>Chat & Order</span>
+          </div>
+        </a>
+        <div class="contact-card">
+          <span class="cc-icon">📍</span>
+          <div>
+            <strong>Location</strong>
+            <span>HMT Layout, Bengaluru – 560013</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="cc-icon">⏰</span>
+          <div>
+            <strong>Open Hours</strong>
+            <span>Mon–Sun: 6:00 AM – 9:00 PM</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="openWhatsApp('Hi! I want to place an order from Lucky Fresh Mart.')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Order on WhatsApp
+      </button>
+    </div>
+    <div class="map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.358!2d77.5384!3d13.0220!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3d5c8f000001%3A0x1!2sHMT+Layout%2C+Bengaluru%2C+Karnataka!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+        width="100%" height="350" style="border:0;border-radius:16px;" allowfullscreen=""
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-icon">🥦</span>
+        <div>
+          <div class="logo-name" style="color:white">Lucky Fresh Mart</div>
+          <div class="logo-tagline" style="color:rgba(255,255,255,0.6)">Farm to Your Table</div>
+        </div>
+      </div>
+      <p>Bringing the freshest vegetables to HMT Layout since 2015. Trusted by 500+ families.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a>
+      <a href="#offers">Today's Deals</a>
+      <a href="#products">Vegetables</a>
+      <a href="#contact">Contact</a>
+      <a href="admin/index.html">Admin Panel</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>📍 HMT Layout, Bengaluru</p>
+      <p>📞 +91-XXXXXXXXXX</p>
+      <p>⏰ 6:00 AM – 9:00 PM</p>
+      <button class="whatsapp-footer-btn" onclick="openWhatsApp('Hello Lucky Fresh Mart!')">
+        💬 WhatsApp Us
+      </button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Lucky Fresh Mart, HMT Layout, Bengaluru. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a class="wa-float" href="#" onclick="openWhatsApp('Hi! I want to order vegetables from Lucky Fresh Mart.'); return false;" aria-label="WhatsApp Order">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

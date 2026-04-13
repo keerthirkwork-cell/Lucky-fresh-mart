@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel – Lucky Fresh Mart</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-dark: #1a5c2a; --green-main: #2d8a47; --green-light: #4caf65;
+      --green-pale: #e8f5eb; --orange: #ff6b2b; --yellow: #ffc107;
+      --text-dark: #1a2e1f; --text-mid: #3d5a42; --text-soft: #6b8870;
+      --white: #fff; --off-white: #f8fdf9; --border: #d4e8d9;
+      --shadow-sm: 0 2px 8px rgba(26,92,42,0.08);
+      --shadow-md: 0 8px 30px rgba(26,92,42,0.12);
+      --radius: 16px; --radius-sm: 10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text-dark); }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+
+    /* ADMIN HEADER */
+    .admin-header {
+      background: var(--green-dark); color: white;
+      padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .admin-logo { display: flex; align-items: center; gap: 10px; }
+    .admin-logo span:first-child { font-size: 1.8rem; }
+    .admin-logo-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
+    .admin-logo-sub { font-size: 0.72rem; opacity: 0.7; }
+    .admin-nav { display: flex; gap: 8px; }
+    .admin-nav a {
+      color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500;
+      padding: 8px 16px; border-radius: 20px; background: rgba(255,255,255,0.1);
+      transition: 0.2s;
+    }
+    .admin-nav a:hover { background: rgba(255,255,255,0.2); color: white; }
+    .admin-nav a.active { background: white; color: var(--green-dark); }
+
+    /* LAYOUT */
+    .admin-body { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 65px); }
+    .sidebar {
+      background: white; border-right: 1px solid var(--border);
+      padding: 24px 0; position: sticky; top: 65px; height: calc(100vh - 65px);
+      overflow-y: auto;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 24px; }
+    .sidebar-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-soft); padding: 0 8px; margin-bottom: 8px; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: var(--radius-sm);
+      font-size: 0.875rem; font-weight: 500; color: var(--text-mid);
+      transition: 0.2s; cursor: pointer; background: none; border: none;
+      width: 100%; text-align: left;
+    }
+    .sidebar-link:hover { background: var(--green-pale); color: var(--green-dark); }
+    .sidebar-link.active { background: var(--green-pale); color: var(--green-dark); font-weight: 600; }
+
+    /* MAIN */
+    .admin-main { padding: 32px; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .page-sub { color: var(--text-soft); font-size: 0.9rem; margin-bottom: 28px; }
+
+    /* STATS */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: white; border-radius: var(--radius); padding: 20px;
+      border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+    }
+    .stat-card .sc-icon { font-size: 2rem; margin-bottom: 8px; }
+    .stat-card .sc-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--green-dark); }
+    .stat-card .sc-label { font-size: 0.8rem; color: var(--text-soft); margin-top: 4px; }
+
+    /* CARDS */
+    .card {
+      background: white; border-radius: var(--radius); padding: 24px;
+      border: 1px solid var(--border); box-shadow: var(--shadow-sm); margin-bottom: 24px;
+    }
+    .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+    /* FORM */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: 0.82rem; font-weight: 600; color: var(--text-mid); }
+    input, select, textarea {
+      padding: 10px 14px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); font-family: inherit; font-size: 0.9rem;
+      color: var(--text-dark); background: white; transition: 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--green-main);
+      box-shadow: 0 0 0 3px rgba(45,138,71,0.12);
+    }
+    .form-actions { display: flex; gap: 12px; margin-top: 20px; }
+    .btn-green {
+      padding: 11px 24px; border-radius: 25px;
+      background: var(--green-main); color: white;
+      font-size: 0.9rem; font-weight: 600; transition: 0.2s;
+    }
+    .btn-green:hover { background: var(--green-dark); }
+    .btn-orange {
+      padding: 11px 24px; border-radius: 25px;
+      background: var(--orange); color: white;
+      font-size: 0.9rem; font-weight: 600; transition: 0.2s;
+    }
+    .btn-red {
+      padding: 8px 16px; border-radius: 20px;
+      background: #fee2e2; color: #dc2626;
+      font-size: 0.8rem; font-weight: 600; transition: 0.2s;
+    }
+    .btn-red:hover { background: #dc2626; color: white; }
+    .btn-edit {
+      padding: 8px 16px; border-radius: 20px;
+      background: var(--green-pale); color: var(--green-dark);
+      font-size: 0.8rem; font-weight: 600; transition: 0.2s;
+    }
+    .btn-edit:hover { background: var(--green-main); color: white; }
+
+    /* PRODUCTS TABLE */
+    .products-table { width: 100%; border-collapse: collapse; }
+    .products-table th {
+      text-align: left; font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-soft);
+      padding: 10px 12px; border-bottom: 2px solid var(--border);
+    }
+    .products-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: middle; }
+    .products-table tr:hover td { background: var(--off-white); }
+    .cat-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;
+    }
+    .cat-leafy  { background: #dcfce7; color: #16a34a; }
+    .cat-root   { background: #fef3c7; color: #d97706; }
+    .cat-fruity { background: #fee2e2; color: #dc2626; }
+    .cat-exotic { background: #ede9fe; color: #7c3aed; }
+    .organic-yes { color: var(--green-main); font-weight: 600; font-size: 0.8rem; }
+    .organic-no  { color: var(--text-muted); font-size: 0.8rem; }
+
+    /* PRICE QUICK EDIT */
+    .price-input {
+      width: 80px; padding: 6px 10px; border-radius: 8px;
+      border: 1.5px solid var(--border); font-size: 0.9rem; font-weight: 600;
+      color: var(--green-dark); text-align: right;
+    }
+    .price-input:focus { border-color: var(--green-main); outline: none; }
+
+    /* OFFERS TABLE */
+    .offers-table { width: 100%; border-collapse: collapse; }
+    .offers-table th {
+      text-align: left; font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-soft);
+      padding: 10px 12px; border-bottom: 2px solid var(--border);
+    }
+    .offers-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+
+    /* SUCCESS TOAST */
+    #admin-toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: var(--green-dark); color: white;
+      padding: 12px 28px; border-radius: 25px; font-size: 0.9rem; font-weight: 500;
+      z-index: 9999; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    /* ALERT BOX */
+    .alert {
+      padding: 14px 18px; border-radius: var(--radius-sm);
+      font-size: 0.875rem; margin-bottom: 16px;
+    }
+    .alert-success { background: #dcfce7; color: #166534; border: 1px solid #a7f3d0; }
+    .alert-info    { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+
+    /* SETTINGS */
+    .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-info h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; }
+    .setting-info p { font-size: 0.8rem; color: var(--text-soft); }
+
+    @media (max-width: 900px) {
+      .admin-body { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 16px; display: flex; overflow-x: auto; }
+      .sidebar-section { display: flex; gap: 8px; margin-bottom: 0; white-space: nowrap; }
+      .sidebar-label { display: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .admin-main { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="admin-header">
+  <div class="admin-logo">
+    <span>🥦</span>
+    <div>
+      <div class="admin-logo-text">Lucky Fresh Mart</div>
+      <div class="admin-logo-sub">Admin Dashboard</div>
+    </div>
+  </div>
+  <div class="admin-nav">
+    <a href="../index.html" target="_blank">View Website ↗</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--green-pale);">
+  <div style="background:white;border-radius:var(--radius);padding:40px;width:360px;box-shadow:var(--shadow-md);border:1px solid var(--border)">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:3rem">🥦</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:4px">Admin Login</h2>
+      <p style="color:var(--text-soft);font-size:0.85rem">Lucky Fresh Mart Dashboard</p>
+    </div>
+    <div class="form-group" style="margin-bottom:16px">
+      <label>Username</label>
+      <input type="text" id="login-user" placeholder="admin" />
+    </div>
+    <div class="form-group" style="margin-bottom:24px">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
+    </div>
+    <button class="btn-green" style="width:100%;text-align:center;padding:14px;" onclick="doLogin()">Login</button>
+    <div id="login-err" style="color:#dc2626;font-size:0.82rem;text-align:center;margin-top:12px;display:none">Invalid credentials. Try admin / admin123</div>
+    <p style="color:var(--text-soft);font-size:0.75rem;text-align:center;margin-top:16px">Default: admin / admin123 (Change in settings)</p>
+  </div>
+</div>
+
+<!-- MAIN ADMIN (hidden until login) -->
+<div id="admin-app" style="display:none">
+<div class="admin-body">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Main</div>
+      <button class="sidebar-link active" onclick="showPage('dashboard')">📊 Dashboard</button>
+      <button class="sidebar-link" onclick="showPage('products')">🥦 Products</button>
+      <button class="sidebar-link" onclick="showPage('offers')">🔥 Offers</button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Settings</div>
+      <button class="sidebar-link" onclick="showPage('settings')">⚙️ Settings</button>
+      <button class="sidebar-link" onclick="showPage('help')">❓ Help</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-title">📊 Dashboard</div>
+      <div class="page-sub">Welcome back! Here's your shop overview.</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="sc-icon">🥦</div><div class="sc-val" id="stat-products">0</div><div class="sc-label">Total Products</div></div>
+        <div class="stat-card"><div class="sc-icon">🔥</div><div class="sc-val" id="stat-offers">0</div><div class="sc-label">Active Offers</div></div>
+        <div class="stat-card"><div class="sc-icon">⏰</div><div class="sc-val">6 AM</div><div class="sc-label">Opens Daily</div></div>
+        <div class="stat-card"><div class="sc-icon">📍</div><div class="sc-val" style="font-size:1rem;margin-top:4px">HMT Layout</div><div class="sc-label">Your Location</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🚀 Quick Actions</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn-green" onclick="showPage('products')">Add Product</button>
+          <button class="btn-orange" onclick="showPage('offers')">Update Offer</button>
+          <button class="btn-edit" onclick="window.open('../index.html','_blank')">View Website</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 Recent Products</div>
+        <div id="dashboard-recent"></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS PAGE -->
+    <div class="page" id="page-products">
+      <div class="page-title">🥦 Product Management</div>
+      <div class="page-sub">Add, edit, or update prices for your vegetables.</div>
+
+      <div class="card">
+        <div class="card-title">➕ Add New Product</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Vegetable Name *</label>
+            <input type="text" id="p-name" placeholder="e.g. Spinach" />
+          </div>
+          <div class="form-group">
+            <label>Emoji *</label>
+            <input type="text" id="p-emoji" placeholder="e.g. 🌿" maxlength="4" />
+          </div>
+          <div class="form-group">
+            <label>Price (₹) *</label>
+            <input type="number" id="p-price" placeholder="e.g. 30" min="1" />
+          </div>
+          <div class="form-group">
+            <label>Unit *</label>
+            <input type="text" id="p-unit" placeholder="e.g. per kg, per bunch" />
+          </div>
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="p-cat">
+              <option value="leafy">Leafy Greens</option>
+              <option value="root">Root Vegetables</option>
+              <option value="fruity">Fruity Veggies</option>
+              <option value="exotic">Exotic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Organic?</label>
+            <select id="p-organic">
+              <option value="true">Yes – Organic</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-green" onclick="addProduct()">Add Product</button>
+          <button class="btn-edit" onclick="clearProductForm()">Clear</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 All Products <span id="product-count" style="font-size:0.8rem;font-weight:400;color:var(--text-soft)"></span></div>
+        <div style="overflow-x:auto">
+          <table class="products-table" id="products-table">
+            <thead>
+              <tr>
+                <th>Item</th><th>Category</th><th>Price (₹)</th><th>Unit</th><th>Organic</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="products-tbody"></tbody>
+          </table>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn-green" onclick="savePrices()">💾 Save All Price Changes</button>
+          <button class="btn-edit" onclick="resetToDefaults()">↩ Reset to Defaults</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OFFERS PAGE -->
+    <div class="page" id="page-offers">
+      <div class="page-title">🔥 Offers Management</div>
+      <div class="page-sub">Set daily deals and discounts to attract more customers.</div>
+
+      <div class="card">
+        <div class="card-title">➕ Add New Offer</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Offer Name *</label>
+            <input type="text" id="o-name" placeholder="e.g. Farm Tomatoes" />
+          </div>
+          <div class="form-group">
+            <label>Emoji</label>
+            <input type="text" id="o-emoji" placeholder="e.g. 🍅" maxlength="4" />
+          </div>
+          <div class="form-group">
+            <label>Original Price (₹) *</label>
+            <input type="number" id="o-orig" placeholder="e.g. 60" min="1" />
+          </div>
+          <div class="form-group">
+            <label>Offer Price (₹) *</label>
+            <input type="number" id="o-price" placeholder="e.g. 40" min="1" />
+          </div>
+          <div class="form-group full">
+            <label>Offer Label</label>
+            <input type="text" id="o-label" placeholder="e.g. Today's Deal, Flash Sale, Weekend Special" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-orange" onclick="addOffer()">Add Offer</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔥 Active Offers</div>
+        <div style="overflow-x:auto">
+          <table class="offers-table" id="offers-table">
+            <thead>
+              <tr><th>Item</th><th>Label</th><th>Original</th><th>Offer Price</th><th>Discount</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="offers-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div class="page" id="page-settings">
+      <div class="page-title">⚙️ Settings</div>
+      <div class="page-sub">Configure your shop details and login credentials.</div>
+
+      <div class="card">
+        <div class="card-title">🏪 Shop Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>WhatsApp Number (with country code)</label>
+            <input type="text" id="s-whatsapp" placeholder="919876543210" />
+          </div>
+          <div class="form-group">
+            <label>Shop Phone</label>
+            <input type="text" id="s-phone" placeholder="+91-XXXXXXXXXX" />
+          </div>
+          <div class="form-group full">
+            <label>Shop Address</label>
+            <input type="text" id="s-address" placeholder="HMT Layout, Bengaluru 560013" />
+          </div>
+          <div class="form-group">
+            <label>Open Time</label>
+            <input type="text" id="s-open" placeholder="6:00 AM" />
+          </div>
+          <div class="form-group">
+            <label>Close Time</label>
+            <input type="text" id="s-close" placeholder="9:00 PM" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-green" onclick="saveSettings()">Save Settings</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔐 Change Password</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>New Username</label>
+            <input type="text" id="s-user" placeholder="admin" />
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="s-pass" placeholder="••••••••" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-green" onclick="changePassword()">Update Login</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⚠️ Danger Zone</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4>Reset All Products</h4>
+            <p>Restore all products to the original default list</p>
+          </div>
+          <button class="btn-red" onclick="resetToDefaults()">Reset Products</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4>Clear All Offers</h4>
+            <p>Remove all current offers from the website</p>
+          </div>
+          <button class="btn-red" onclick="clearOffers()">Clear Offers</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HELP PAGE -->
+    <div class="page" id="page-help">
+      <div class="page-title">❓ Help & Instructions</div>
+      <div class="page-sub">How to manage your Lucky Fresh Mart website.</div>
+
+      <div class="card">
+        <div class="card-title">📱 How WhatsApp Orders Work</div>
+        <p style="color:var(--text-soft);line-height:1.7;margin-bottom:12px">When a customer clicks "Order on WhatsApp", they are taken to WhatsApp with a pre-filled message containing their cart items. You simply reply to confirm the order and arrange delivery.</p>
+        <div class="alert alert-info">💡 Make sure to set your correct WhatsApp number in Settings!</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💰 How to Update Prices</div>
+        <ol style="color:var(--text-soft);line-height:2;padding-left:20px">
+          <li>Go to <strong>Products</strong> page</li>
+          <li>Find the vegetable you want to update</li>
+          <li>Type the new price directly in the price field</li>
+          <li>Click <strong>"Save All Price Changes"</strong> button</li>
+          <li>Prices update instantly on the website!</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔥 Setting Daily Offers</div>
+        <ol style="color:var(--text-soft);line-height:2;padding-left:20px">
+          <li>Go to <strong>Offers</strong> page</li>
+          <li>Delete yesterday's offers with the ❌ button</li>
+          <li>Add new offers with today's special deals</li>
+          <li>Offers appear instantly on your website homepage</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🚀 Deploying Your Website</div>
+        <p style="color:var(--text-soft);line-height:1.7">See the included <strong>DEPLOY.md</strong> file for full deployment instructions including how to host on Netlify, Vercel, or a custom domain.</p>
+      </div>
+    </div>
+
+  </div><!-- admin-main -->
+</div><!-- admin-body -->
+</div><!-- admin-app -->
+
+<div id="admin-toast"></div>
+
+<script>
+// ===== AUTH =====
+const DEFAULT_CREDS = { user: 'admin', pass: 'admin123' };
+
+function getAdminCreds() {
+  try {
+    const saved = localStorage.getItem('lfm_admin_creds');
+    return saved ? JSON.parse(saved) : DEFAULT_CREDS;
+  } catch { return DEFAULT_CREDS; }
+}
+
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value.trim();
+  const creds = getAdminCreds();
+  if (u === creds.user && p === creds.pass) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-app').style.display = 'none';
+}
+
+function changePassword() {
+  const u = document.getElementById('s-user').value.trim();
+  const p = document.getElementById('s-pass').value.trim();
+  if (!u || !p) return alert('Enter both username and password');
+  localStorage.setItem('lfm_admin_creds', JSON.stringify({ user: u, pass: p }));
+  showAdminToast('✅ Login credentials updated!');
+}
+
+// ===== NAV =====
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const btns = document.querySelectorAll('.sidebar-link');
+  btns.forEach(b => { if (b.textContent.toLowerCase().includes(name.substring(0, 4))) b.classList.add('active'); });
+  if (name === 'products') renderProductsTable();
+  if (name === 'offers') renderOffersTable();
+}
+
+// ===== PRODUCTS =====
+function getProducts() {
+  try {
+    const s = localStorage.getItem('lfm_products');
+    return s ? JSON.parse(s) : DEFAULT_PRODUCTS;
+  } catch { return DEFAULT_PRODUCTS; }
+}
+function saveProducts(products) {
+  localStorage.setItem('lfm_products', JSON.stringify(products));
+}
+
+function addProduct() {
+  const name   = document.getElementById('p-name').value.trim();
+  const emoji  = document.getElementById('p-emoji').value.trim() || '🥦';
+  const price  = parseInt(document.getElementById('p-price').value);
+  const unit   = document.getElementById('p-unit').value.trim();
+  const cat    = document.getElementById('p-cat').value;
+  const organic= document.getElementById('p-organic').value === 'true';
+
+  if (!name || !price || !unit) return alert('Please fill in Name, Price, and Unit.');
+
+  const products = getProducts();
+  const newId = Date.now();
+  products.push({ id: newId, name, emoji, price, unit, cat, organic });
+  saveProducts(products);
+  clearProductForm();
+  renderProductsTable();
+  updateDashboard();
+  showAdminToast('✅ Product added successfully!');
+}
+
+function clearProductForm() {
+  ['p-name','p-emoji','p-price','p-unit'].forEach(id => document.getElementById(id).value = '');
+}
+
+function deleteProduct(id) {
+  if (!confirm('Delete this product?')) return;
+  let products = getProducts().filter(p => p.id != id);
+  saveProducts(products);
+  renderProductsTable();
+  updateDashboard();
+  showAdminToast('🗑️ Product removed!');
+}
+
+function savePrices() {
+  const rows = document.querySelectorAll('[data-price-id]');
+  let products = getProducts();
+  rows.forEach(input => {
+    const id = parseInt(input.dataset.priceId);
+    const newPrice = parseInt(input.value);
+    if (!isNaN(newPrice) && newPrice > 0) {
+      const p = products.find(pr => pr.id === id);
+      if (p) p.price = newPrice;
+    }
+  });
+  saveProducts(products);
+  showAdminToast('💾 All prices saved!');
+}
+
+function resetToDefaults() {
+  if (!confirm('This will reset all products to defaults. Continue?')) return;
+  localStorage.removeItem('lfm_products');
+  renderProductsTable();
+  updateDashboard();
+  showAdminToast('↩ Products reset to defaults!');
+}
+
+function renderProductsTable() {
+  const products = getProducts();
+  document.getElementById('product-count').textContent = `(${products.length} items)`;
+  const tbody = document.getElementById('products-tbody');
+  tbody.innerHTML = products.map(p => `
+    <tr>
+      <td><span style="font-size:1.3rem">${p.emoji}</span> ${p.name}</td>
+      <td><span class="cat-badge cat-${p.cat}">${p.cat}</span></td>
+      <td>₹ <input type="number" class="price-input" data-price-id="${p.id}" value="${p.price}" min="1" /></td>
+      <td style="color:var(--text-soft)">${p.unit}</td>
+      <td>${p.organic ? '<span class="organic-yes">✅ Yes</span>' : '<span class="organic-no">No</span>'}</td>
+      <td><button class="btn-red" onclick="deleteProduct(${p.id})">❌ Delete</button></td>
+    </tr>
+  `).join('');
+}
+
+// ===== OFFERS =====
+function getOffers() {
+  try {
+    const s = localStorage.getItem('lfm_offers');
+    return s ? JSON.parse(s) : DEFAULT_OFFERS;
+  } catch { return DEFAULT_OFFERS; }
+}
+function saveOffers(offers) {
+  localStorage.setItem('lfm_offers', JSON.stringify(offers));
+}
+
+function addOffer() {
+  const name  = document.getElementById('o-name').value.trim();
+  const emoji = document.getElementById('o-emoji').value.trim() || '🥦';
+  const orig  = parseInt(document.getElementById('o-orig').value);
+  const price = parseInt(document.getElementById('o-price').value);
+  const label = document.getElementById('o-label').value.trim() || "Today's Deal";
+
+  if (!name || !orig || !price) return alert('Fill in Name, Original Price, and Offer Price.');
+  if (price >= orig) return alert('Offer price must be less than original price!');
+
+  const disc = Math.round((1 - price/orig) * 100) + '% OFF';
+  const offers = getOffers();
+  offers.push({ id: Date.now(), name, emoji, originalPrice: orig, offerPrice: price, discount: disc, label });
+  saveOffers(offers);
+  renderOffersTable();
+  updateDashboard();
+  ['o-name','o-emoji','o-orig','o-price','o-label'].forEach(id => document.getElementById(id).value = '');
+  showAdminToast('🔥 Offer added!');
+}
+
+function deleteOffer(id) {
+  if (!confirm('Delete this offer?')) return;
+  const offers = getOffers().filter(o => o.id != id);
+  saveOffers(offers);
+  renderOffersTable();
+  updateDashboard();
+  showAdminToast('🗑️ Offer removed!');
+}
+
+function clearOffers() {
+  if (!confirm('Clear ALL offers?')) return;
+  saveOffers([]);
+  renderOffersTable();
+  updateDashboard();
+  showAdminToast('Offers cleared!');
+}
+
+function renderOffersTable() {
+  const offers = getOffers();
+  const tbody = document.getElementById('offers-tbody');
+  if (offers.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-soft);padding:30px">No offers yet. Add one above!</td></tr>';
+    return;
+  }
+  tbody.innerHTML = offers.map(o => `
+    <tr>
+      <td><span style="font-size:1.2rem">${o.emoji}</span> ${o.name}</td>
+      <td><span style="font-size:0.8rem;font-weight:600;color:var(--orange)">${o.label}</span></td>
+      <td style="text-decoration:line-through;color:var(--text-muted)">₹${o.originalPrice}</td>
+      <td style="font-weight:700;color:var(--green-dark)">₹${o.offerPrice}</td>
+      <td><span style="background:#dcfce7;color:#16a34a;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:700">${o.discount}</span></td>
+      <td><button class="btn-red" onclick="deleteOffer(${o.id})">❌ Delete</button></td>
+    </tr>
+  `).join('');
+}
+
+// ===== SETTINGS =====
+function saveSettings() {
+  const settings = {
+    whatsapp: document.getElementById('s-whatsapp').value.trim(),
+    phone: document.getElementById('s-phone').value.trim(),
+    address: document.getElementById('s-address').value.trim(),
+    open: document.getElementById('s-open').value.trim(),
+    close: document.getElementById('s-close').value.trim(),
+  };
+  localStorage.setItem('lfm_settings', JSON.stringify(settings));
+  showAdminToast('✅ Settings saved! Update index.html with new WhatsApp number.');
+}
+
+function loadSettings() {
+  try {
+    const s = JSON.parse(localStorage.getItem('lfm_settings') || '{}');
+    if (s.whatsapp) document.getElementById('s-whatsapp').value = s.whatsapp;
+    if (s.phone) document.getElementById('s-phone').value = s.phone;
+    if (s.address) document.getElementById('s-address').value = s.address;
+    if (s.open) document.getElementById('s-open').value = s.open;
+    if (s.close) document.getElementById('s-close').value = s.close;
+  } catch {}
+}
+
+// ===== DASHBOARD =====
+function updateDashboard() {
+  const products = getProducts();
+  const offers = getOffers();
+  document.getElementById('stat-products').textContent = products.length;
+  document.getElementById('stat-offers').textContent = offers.length;
+
+  const recent = products.slice(-5).reverse();
+  document.getElementById('dashboard-recent').innerHTML = recent.length ? `
+    <table class="products-table">
+      <thead><tr><th>Item</th><th>Category</th><th>Price</th></tr></thead>
+      <tbody>${recent.map(p => `
+        <tr>
+          <td>${p.emoji} ${p.name}</td>
+          <td><span class="cat-badge cat-${p.cat}">${p.cat}</span></td>
+          <td style="font-weight:700;color:var(--green-dark)">₹${p.price}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  ` : '<p style="color:var(--text-soft)">No products yet.</p>';
+}
+
+// ===== TOAST =====
+function showAdminToast(msg) {
+  const t = document.getElementById('admin-toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+// ===== INIT =====
+function initAdmin() {
+  updateDashboard();
+  loadSettings();
+}
+
+// DEFAULT DATA (same as data.js)
+const DEFAULT_PRODUCTS = [
+  { id: 1,  name: "Spinach",          emoji: "🌿", unit: "per bunch",   price: 15,  cat: "leafy",  organic: true  },
+  { id: 2,  name: "Coriander",        emoji: "🌱", unit: "per bunch",   price: 10,  cat: "leafy",  organic: true  },
+  { id: 3,  name: "Methi (Fenugreek)",emoji: "🌿", unit: "per bunch",   price: 12,  cat: "leafy",  organic: false },
+  { id: 7,  name: "Onion",            emoji: "🧅", unit: "per kg",      price: 40,  cat: "root",   organic: false },
+  { id: 8,  name: "Potato",           emoji: "🥔", unit: "per kg",      price: 35,  cat: "root",   organic: false },
+  { id: 14, name: "Tomato",           emoji: "🍅", unit: "per kg",      price: 30,  cat: "fruity", organic: true  },
+  { id: 24, name: "Broccoli",         emoji: "🥦", unit: "per piece",   price: 60,  cat: "exotic", organic: true  },
+];
+const DEFAULT_OFFERS = [
+  { id: 1, emoji: "🍅", name: "Farm Tomatoes", originalPrice: 50, offerPrice: 30, discount: "40% OFF", label: "Today's Deal" },
+  { id: 2, emoji: "🥕", name: "Fresh Carrots", originalPrice: 70, offerPrice: 45, discount: "35% OFF", label: "Flash Sale" },
+];
+</script>
+
+</body>
+</html>

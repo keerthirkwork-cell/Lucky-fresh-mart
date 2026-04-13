@@ -1,0 +1,16 @@
+{
+  "name": "lucky-fresh-mart",
+  "version": "1.0.0",
+  "description": "Lucky Fresh Mart – Fresh Vegetable Shop Website",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "keywords": ["vegetable shop", "fresh mart", "bengaluru"],
+  "author": "Lucky Fresh Mart",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
